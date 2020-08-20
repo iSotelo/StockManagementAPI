@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewData["Title"] = "Administración de vehículos";
+}
+
+<div ng-app="CarApp" ng-controller="CarController">
+    <h2>{{head}}</h2>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <form name="carForm" novalidate>
+
+                <div class="form-group">
+                    <label for="brand">Brand *</label>
+                    <select name="Brand" class="form-control" ng-model="register.Brand" required>
+                        <option ng-repeat="option in brands.availableOptions" value="{{option.name}}">{{option.name}}</option>
+                    </select>
+                    <span class="messages" ng-show="carForm.$submitted || carForm.Brand.$touched">
+                        <span ng-show="carForm.Brand.$error.required">The field is requiered.</span>
+                        <span ng-show="carForm.Brand.$error.maxlength">The maximum length allowed is 50 characters</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="model">Model *</label>
+                    <input name="Model" type="text" class="form-control" id="model" maxlength="50" ng-model="register.Model" ng-model-options="{ updateOn: 'blur' }" required>
+                    <span class="messages" ng-show="carForm.$submitted || carForm.Model.$touched">
+                        <span ng-show="carForm.Model.$error.required">The field is requiered.</span>
+                        <span ng-show="carForm.Model.$error.maxlength">The maximum length allowed is 50 characters</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea name="Description" class="form-control" aria-label="With textarea" id="description" ng-model="register.Description" maxlength="100" ng-model-options="{ updateOn: 'blur' }"></textarea>
+                    <span class="messages" ng-show="carForm.$submitted || carForm.Description.$touched">
+                        <span ng-show="carForm.Description.$error.maxlength">The maximum length allowed is 100 characters</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input name="Year" type="number" min="0" max="9000" class="form-control" id="year" ng-model="register.Year">
+                    <span class="messages" ng-show="carForm.$submitted || carForm.Year.$touched">
+                        <span ng-show="carForm.Year.$error.min">The value must be in range 0 to 9000</span>
+                        <span ng-show="carForm.Year.$error.max">The value must be in range 0 to 9000</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="kilometers">Kilometers *</label>
+                    <input name="Kilometers" type="number" min="0" max="1000000" class="form-control" id="kilometers" ng-model="register.Kilometers" required>
+                    <span class="messages" ng-show="carForm.$submitted || carForm.Kilometers.$touched">
+                        <span ng-show="carForm.Kilometers.$error.required">The field is requiered.</span>
+                        <span ng-show="carForm.Kilometers.$error.min">The value must be in range 0 to 1000000</span>
+                        <span ng-show="carForm.Kilometers.$error.max">The value must be in range 0 to 1000000</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price ($) *</label>
+                    <input name="Price" type="number" min="1" max="10000000" class="form-control" id="price" ng-model="register.Price" required>
+                    <span class="messages" ng-show="carForm.$submitted || carForm.Price.$touched">
+                        <span ng-show="carForm.Price.$error.required">The field is requiered.</span>
+                        <span ng-show="carForm.Price.$error.min">The value must be in range 1 to 10000000</span>
+                        <span ng-show="carForm.Price.$error.max">The value must be in range 1 to 10000000</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="imageurl">Image</label>
+                    <input name="ImageUrl" type="file" class="form-control-file" id="imageurl" ng-model="register.ImageUrl">
+                </div>
+
+                <div class="form-group">
+                    <input type="reset" class="btn btn-info" ng-click="reset(carForm)" value="Clean" />
+                    <input type="submit" class="btn btn-primary" ng-click="Save()" value="{{btnText}}" ng-disabled="carForm.$invalid" />
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <table class="table table-sm table-striped table-bordered table-hover">
+                <caption><h5>List of vehicles</h5></caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Kilometers</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Description</th>
+                        <th scope="col" colspan="2">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in cars">
+                        <th scope="row">{{item.CarId}}</th>
+                        <td>{{item.Brand}}</td>
+                        <td>{{item.Model}}</td>
+                        <td>{{item.Year}}</td>
+                        <td>{{item.Kilometers}}</td>
+                        <td>${{item.Price}}</td>
+                        <td>{{item.Description}}</td>
+                        <td><a href="#" ng-click="loadCar(item.CarId)"><i class="fas fa-edit fa-2x"></i></a></td>
+                        <td><a href="#" ng-confirm-click="Are you sure to delete this record ?" confirmed-click="deleteCar(item.CarId)"><i class="fas fa-trash fa-2x"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/js/carapp.js"></script>
+
+<script>
+    @*Cars = @Html.Raw(Json.Serialize(ViewData["Cars"]));
+    console.log(Cars)*@
+</script>
