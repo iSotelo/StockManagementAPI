@@ -8,8 +8,8 @@ namespace StockManagementAPI.DAL
     {
         Task<IEnumerable<Car>> GetCars();
         Task<Car> GetCar(int carId);
-        Task<bool> CreateCar(Car newCar);
-        Task<bool> UpdateCar(Car oldCar);
+        Task<int> CreateCar(Car newCar);
+        Task<int> UpdateCar(Car oldCar);
         Task<bool> DeleteCar(int carId);
     }
 }

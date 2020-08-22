@@ -8,8 +8,7 @@
     <br />
     <div class="row">
         <div class="col-md-4">
-            <form name="carForm" novalidate>
-
+            <form name="carForm" novalidate enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="brand">Brand *</label>
                     <select name="Brand" class="form-control" ng-model="register.Brand" required>
@@ -69,7 +68,8 @@
 
                 <div class="form-group">
                     <label for="imageurl">Image</label>
-                    <input name="ImageUrl" type="file" class="form-control-file" id="imageurl" ng-model="register.ImageUrl">
+                    <input name="ImageUrl" type="file" class="form-control-file" id="imageurl" ng-model="register.ImageUrl" onchange="loadFile(event)">
+                    <img id="imagesrc" alt="Image" class="img-thumbnail" src="{{register.ImageUrl}}">
                 </div>
 
                 <div class="form-group">
@@ -83,6 +83,7 @@
                 <caption><h5>List of vehicles</h5></caption>
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Id</th>
                         <th scope="col">Brand</th>
                         <th scope="col">Model</th>
@@ -95,6 +96,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in cars">
+                        <th><img src="{{item.ImageUrl}}" alt="{{item.Model}}" class="img-thumbnail"/></th>
                         <th scope="row">{{item.CarId}}</th>
                         <td>{{item.Brand}}</td>
                         <td>{{item.Model}}</td>
@@ -115,6 +117,30 @@
 
 
 <script src="~/js/carapp.js"></script>
+<script>
+    var loadFile = function (event) {
+        var output = document.getElementById('imagesrc');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+
+        
+
+        //$.ajax(
+        //    {
+        //        url: "Car/UploadFile",
+        //        data: formData,
+        //        processData: false,
+        //        contentType: false,
+        //        type: "POST",
+        //        success: function (data) {
+        //            alert("Files Uploaded!");
+        //        }
+        //    }
+        //);
+    };
+</script>
 
 <script>
     @*Cars = @Html.Raw(Json.Serialize(ViewData["Cars"]));

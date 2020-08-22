@@ -10,9 +10,9 @@ namespace StockManagementAPI.DAL
 {
     public class CarRepository : ICarRepository
     {
-        public async Task<bool> CreateCar(Car newCar)
+        public async Task<int> CreateCar(Car newCar)
         {
-            bool response = false;
+            int carid = 0;
             try
             {
                 List<Car> cars = ReadCars().ToList();
@@ -21,17 +21,25 @@ namespace StockManagementAPI.DAL
                 {
                     int lastid = cars.Max(I => I.CarId);
                     newCar.CarId = lastid + 1;
+                    
+                    // get namefile
+                    if(newCar.Image != null && newCar.Image.Length > 0)
+                    {
+                        var ext = System.IO.Path.GetExtension(newCar.Image.FileName);
+                        string filename = newCar.CarId + "." + ext;
+                        newCar.ImageName = filename;
+                    }
 
                     cars.Add(newCar);
                     await WriteCars(cars);
-                    response = true;
+                    carid = newCar.CarId;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
-            return response;
+            return carid;
         }
 
         public async Task<bool> DeleteCar(int carId)
@@ -93,9 +101,9 @@ namespace StockManagementAPI.DAL
             return cars;
         }
 
-        public async Task<bool> UpdateCar(Car carToUpdate)
+        public async Task<int> UpdateCar(Car carToUpdate)
         {
-            bool response = false;
+            int carid = 0;
             try
             {
                 List<Car> cars = ReadCars().ToList();
@@ -116,7 +124,14 @@ namespace StockManagementAPI.DAL
                         car.Year = carToUpdate.Year;
                         car.Kilometers = carToUpdate.Kilometers;
                         car.Price = carToUpdate.Price;
-                        car.ImageUrl = carToUpdate.ImageUrl;
+
+                        // get namefile
+                        if (carToUpdate.Image != null && carToUpdate.Image.Length > 0)
+                        {
+                            var ext = System.IO.Path.GetExtension(carToUpdate.Image.FileName);
+                            string filename = carToUpdate.CarId + "." + ext;
+                            car.ImageName = filename;
+                        }
 
                         // add updated object
                         cars.Add(car);
@@ -124,7 +139,7 @@ namespace StockManagementAPI.DAL
                         // write changes to store
                         await WriteCars(cars);
 
-                        response = true;
+                        carid = car.CarId;
                     }
                 }
             }
@@ -132,7 +147,7 @@ namespace StockManagementAPI.DAL
             {
                 Console.WriteLine(ex.ToString());
             }
-            return response;
+            return carid;
         }
 
 

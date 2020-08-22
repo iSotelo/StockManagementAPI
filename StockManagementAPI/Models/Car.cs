@@ -1,4 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 
 namespace StockManagementAPI.Models
 {
@@ -8,9 +13,8 @@ namespace StockManagementAPI.Models
         [Required]
         public int CarId { get; set; }
 
-
         [Required(ErrorMessage = "The field is requiered")]
-        [StringLength(50, ErrorMessage="The maximum length allowed is 50 characters")]
+        [StringLength(50, ErrorMessage = "The maximum length allowed is 50 characters")]
         public string Model { get; set; }
 
 
@@ -35,7 +39,11 @@ namespace StockManagementAPI.Models
         [Range(0, 10000000, ErrorMessage = "The value must be in range 0 to 10000000")]
         public decimal Price { get; set; }
 
-
         public string ImageUrl { get; set; }
+
+        [JsonIgnore]
+        public IFormFile Image { get; set; }
+
+        public string ImageName { get; set; }
     }
 }

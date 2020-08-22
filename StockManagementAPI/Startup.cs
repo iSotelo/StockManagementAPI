@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using StockManagementAPI.DAL;
+using System.IO;
 
 namespace StockManagementAPI
 {
@@ -38,6 +40,12 @@ namespace StockManagementAPI
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "images")),
+                RequestPath = new PathString("/Images")
+            });
 
             app.UseMvc(routes =>
             {

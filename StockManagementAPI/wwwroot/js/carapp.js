@@ -33,22 +33,27 @@ app.controller('CarController', ['$scope', '$http', function ($scope, $http) {
     };
     $scope.btnText = "Save";
 
-    $scope.Save = function (form) {
+    $scope.Save = function () {
         $scope.btnText = "Please Wait...";
 
-        if (form) {
-            form.$setPristine();
-            form.$setUntouched();
-        }
-
-
+        var formData = new FormData();
+        console.log($scope.register)
+        formData.append('CarId', $scope.register.CarId);
+        formData.append('Model', $scope.register.Model);
+        formData.append('Description', $scope.register.Description);
+        formData.append('Year', $scope.register.Year);
+        formData.append('Brand', $scope.register.Brand);
+        formData.append('Kilometers', $scope.register.Kilometers);
+        formData.append('Price', $scope.register.Price);
+        formData.append('Image', $('#imageurl')[0].files[0]);
 
         if ($scope.IsNew) {
-            console.log("New Record")
-            jQuery.ajax({
+            $.ajax({
                 url: 'Car/CreateCar',
                 type: "POST",
-                data: { newcar: $scope.register },
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                data: formData,
                 async: false,
                 success: function (response) {
                     $scope.btnText = "Save";
@@ -63,11 +68,12 @@ app.controller('CarController', ['$scope', '$http', function ($scope, $http) {
                 }
             });
         } else {
-            console.log("Update")
-            jQuery.ajax({
+            $.ajax({
                 url: 'Car/UpdateCar',
                 type: "POST",
-                data: { cartoupdate: $scope.register },
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                data: formData,
                 async: false,
                 success: function (response) {
                     $scope.btnText = "Save";
