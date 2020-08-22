@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagementAPI", "StockManagementAPI\StockManagementAPI.csproj", "{B260FBB2-ED2D-463F-B319-AAF227B881FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagementAPI", "StockManagementAPI\StockManagementAPI.csproj", "{B260FBB2-ED2D-463F-B319-AAF227B881FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagementAPI.Test", "StockManagementAPI.Test\StockManagementAPI.Test.csproj", "{AF4421B1-3CCA-4404-B1C0-2D28BB34F60B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B260FBB2-ED2D-463F-B319-AAF227B881FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B260FBB2-ED2D-463F-B319-AAF227B881FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B260FBB2-ED2D-463F-B319-AAF227B881FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF4421B1-3CCA-4404-B1C0-2D28BB34F60B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF4421B1-3CCA-4404-B1C0-2D28BB34F60B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF4421B1-3CCA-4404-B1C0-2D28BB34F60B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF4421B1-3CCA-4404-B1C0-2D28BB34F60B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
